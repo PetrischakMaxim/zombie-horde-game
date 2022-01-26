@@ -1,0 +1,22 @@
+{
+  "name": "zombie-horde-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./js/main.js",
+  "scripts": {
+    "start": "snowpack dev --polyfill-node",
+    "build": "snowpack build --polyfill-node",
+    "init": "snowpack init"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "matter-js": "0.18.0",
+    "pixi.js": "6.2.1",
+    "victor": "1.1.0"
+  },
+  "devDependencies": {
+    "snowpack": "3.8.8"
+  }
+}
