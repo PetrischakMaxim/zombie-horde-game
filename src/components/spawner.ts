@@ -1,25 +1,29 @@
+import Zombie from "./zombie";
+
 export default class Spawner {
-    constructor({create}) {
-        this.time = 1000;
-        this.maxCount = 3;
-        this.create = create;
+    _time: number;
+    _maxCount: 3;
+    _timerId: number;
+    _element: Zombie;
+    public elements: Array<Zombie>;
+
+    constructor(element: Zombie) {
+        this._time = 1000;
+        this._maxCount = 3;
         this.elements = [];
-        this.timerId = null;
-        this.run();
+        this._timerId = null;
+        this._element = element;
+        this._generate();
     }
 
-    run() {
-        this.timerId = setInterval(() => {
-            this.spawn();
-        }, this.time)
+    private _generate() {
+        this._timerId = window.setInterval(this._spawn, this._time)
     }
 
-    spawn() {
-        if (this.elements.length >= this.maxCount) {
+    private _spawn() {
+        if (this.elements.length >= this._maxCount) {
             return;
         }
-        const element = this.create();
-        this.elements.push(element);
+        this.elements.push(this._element);
     }
-
 }
