@@ -8,7 +8,7 @@ const canvasSize = 512;
 const canvasElement = document.querySelector('#myCanvas');
 
 const app = new PIXI.Application({
-    view: canvasElement,
+    view: canvasElement as HTMLCanvasElement,
     width: canvasSize,
     height: canvasSize,
     backgroundColor: 0x312a2b,
@@ -22,7 +22,7 @@ const spawner = new Spawner({
     create: () => new Zombie({app, player})
 })
 
-app.ticker.add((delta) => {
+app.ticker.add(() => {
     player.update();
     spawner.elements.forEach((element) => {
         element.update()
