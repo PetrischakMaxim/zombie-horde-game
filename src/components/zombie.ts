@@ -1,43 +1,53 @@
-import {Graphics}  from "pixi.js";
+import {Application, Graphics} from "pixi.js";
 import Victor from "victor";
+import Player from "./player";
+
+
+interface Options {
+    app: Application,
+    player: Player
+}
 
 export default class Zombie {
-    constructor({app, player}) {
-        this.app = app;
-        this.player = player;
-        this.radius = 16;
-        this.speed = 2;
-        this.sprite = new Graphics();
+    _sprite: Graphics;
+    _speed: number;
+    _radius: number;
+    _options: Options;
+
+    constructor(options: Options) {
+        this._options = options;
+        this._radius = 16;
+        this._speed = 2;
+        this._sprite = new Graphics();
         const r = this.randomSpawnPoint();
-        this.sprite.position.set(r.x, r.y);
-        this.sprite.beginFill(0xFF0000, 1);
-        this.sprite.drawCircle(0, 0, this.radius);
-        this.sprite.endFill();
-        app.stage.addChild(this.sprite);
+        this._sprite.position.set(r.x, r.y);
+        this._sprite.beginFill(0xFF0000, 1);
+        this._sprite.drawCircle(0, 0, this._radius);
+        this._sprite.endFill();
+        this._options.app.stage.addChild(this._sprite);
     }
 
     update() {
-        const e = new Victor(this.sprite.position.x, this.sprite.position.y);
-        const s = new Victor(this.player.position.x, this.player.position.y);
-        if (e.distance(s) < this.player.width / 2) {
-            //this.attackPlayer();
+        const e = new Victor(this._sprite.position.x, this._sprite.position.y);
+        const s = new Victor(this._options.player.position.x, this._options.player.position.y);
+        if (e.distance(s) < this._options.player.width / 2) {
             const r = this.randomSpawnPoint();
-            this.sprite.position.set(r.x, r.y);
+            this._sprite.position.set(r.x, r.y);
             return;
         }
         const d = s.subtract(e);
-        const v = d.normalize().multiplyScalar(this.speed);
-        this.sprite.scale.x = v.x < 0 ? 1 : -1;
-        this.sprite.position.set(
-            this.sprite.position.x + v.x,
-            this.sprite.position.y + v.y
+        const v = d.normalize().multiplyScalar(this._speed);
+        this._sprite.scale.x = v.x < 0 ? 1 : -1;
+        this._sprite.position.set(
+            this._sprite.position.x + v.x,
+            this._sprite.position.y + v.y
         );
     }
 
     randomSpawnPoint() {
         const edge = Math.floor(Math.random() * 4);
         const spawnPoint = new Victor(0, 0);
-        const canvasSize = this.app.screen.width;
+        const canvasSize = this._options.app.screen.width;
         switch (edge) {
             case 0: //top
                 spawnPoint.x = canvasSize * Math.random();
