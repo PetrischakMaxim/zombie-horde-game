@@ -1,5 +1,5 @@
 import {Application, SCALE_MODES, settings} from "pixi.js";
-
+import {bulletHitTest} from "./components/utils";
 import Player from "./components/player";
 import Zombie from "./components/zombie";
 import Spawner from "./components/spawner";
@@ -19,7 +19,13 @@ settings.SCALE_MODE = SCALE_MODES.NEAREST;
 const player = new Player(app);
 const spawner = new Spawner(new Zombie({app, player}));
 
-app.ticker.add(() => {
-    player.update();
-    spawner.elements.forEach((element: Zombie) => element.update());
+app.ticker.add((delta) => {
+    player.update(delta);
+    spawner.elements.forEach((zombie: Zombie) => zombie.update());
+    bulletHitTest(
+        player.shooting.bullets,
+        spawner.elements,
+        8,
+        16,
+    )
 });

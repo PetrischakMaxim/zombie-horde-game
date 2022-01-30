@@ -19,7 +19,7 @@ export default class Zombie {
         this._radius = 16;
         this._speed = 2;
         this._sprite = new Graphics();
-        const r = this.randomSpawnPoint();
+        const r = this._randomSpawnPoint();
         this._sprite.position.set(r.x, r.y);
         this._sprite.beginFill(0xFF0000, 1);
         this._sprite.drawCircle(0, 0, this._radius);
@@ -27,24 +27,7 @@ export default class Zombie {
         this._options.app.stage.addChild(this._sprite);
     }
 
-    update() {
-        const e = new Victor(this._sprite.position.x, this._sprite.position.y);
-        const s = new Victor(this._options.player.position.x, this._options.player.position.y);
-        if (e.distance(s) < this._options.player.width / 2) {
-            const r = this.randomSpawnPoint();
-            this._sprite.position.set(r.x, r.y);
-            return;
-        }
-        const d = s.subtract(e);
-        const v = d.normalize().multiplyScalar(this._speed);
-        this._sprite.scale.x = v.x < 0 ? 1 : -1;
-        this._sprite.position.set(
-            this._sprite.position.x + v.x,
-            this._sprite.position.y + v.y
-        );
-    }
-
-    randomSpawnPoint() {
+    _randomSpawnPoint() {
         const edge = Math.floor(Math.random() * 4);
         const spawnPoint = new Victor(0, 0);
         const canvasSize = this._options.app.screen.width;
@@ -68,4 +51,31 @@ export default class Zombie {
         }
         return spawnPoint;
     }
+
+    public update() {
+        const e = new Victor(this._sprite.position.x, this._sprite.position.y);
+        const s = new Victor(this._options.player.position.x, this._options.player.position.y);
+        if (e.distance(s) < this._options.player.width / 2) {
+            const r = this._randomSpawnPoint();
+            this._sprite.position.set(r.x, r.y);
+            return;
+        }
+        const d = s.subtract(e);
+        const v = d.normalize().multiplyScalar(this._speed);
+        this._sprite.scale.x = v.x < 0 ? 1 : -1;
+        this._sprite.position.set(
+            this._sprite.position.x + v.x,
+            this._sprite.position.y + v.y
+        );
+    }
+
+    public kill() {
+        this._options.app.stage.removeChild(this._sprite);
+    }
+
+    get position() {
+        return this._sprite.position;
+    }
+
+
 }
