@@ -2,7 +2,6 @@ import {Application, Graphics} from "pixi.js";
 import Victor from "victor";
 import Player from "./player";
 
-
 interface Options {
     app: Application,
     player: Player
@@ -76,6 +75,4 @@ export default class Zombie {
     get position() {
         return this._sprite.position;
     }
-
-
 }

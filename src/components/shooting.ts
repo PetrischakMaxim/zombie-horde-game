@@ -68,7 +68,7 @@ export default class Shooting {
         );
     }
 
-    set shoot(shooting) {
+    set shoot(shooting: boolean) {
         if (shooting) {
             this._fire();
             this._timerId = window.setInterval(this._fire, 500);
