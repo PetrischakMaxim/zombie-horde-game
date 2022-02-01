@@ -17,15 +17,18 @@ const app = new Application({
 
 settings.SCALE_MODE = SCALE_MODES.NEAREST;
 const player = new Player(app);
-const spawner = new Spawner(new Zombie({app, player}));
+const spawner = new Spawner({
+    callback: () => new Zombie({app, player})
+});
 
 app.ticker.add((delta) => {
     player.update(delta);
-    spawner.elements.forEach((zombie: Zombie) => zombie.update());
+    spawner.children.forEach((zombie: Zombie) => zombie.update());
+
     bulletHitTest(
         player.shooting.bullets,
-        spawner.elements,
+        spawner.children,
         8,
         16,
-    )
+    );
 });
