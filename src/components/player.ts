@@ -1,34 +1,49 @@
-import {Sprite,Texture} from "pixi.js";
+import {Application, Sprite, Texture} from "pixi.js";
+import Shooting from "./shooting";
 
 export default class Player {
-    constructor({app}) {
-        this.app = app;
-        this.sprite = new Sprite(Texture.WHITE);
-        this.spriteSize = 32;
-        this.sprite.anchor.set(0.5);
-        this.sprite.position.set(app.screen.width / 2, app.screen.height / 2);
-        this.sprite.width = this.sprite.height = this.spriteSize;
-        this.sprite.tint = 0xea985d;
+    _spriteSize: number;
+    _sprite: Sprite;
+    _app: Application;
 
-        app.stage.addChild(this.sprite);
+    _lastMouseButton: number;
+   public shooting: Shooting;
+
+    constructor(app: Application) {
+        this._app = app;
+        this._spriteSize = 32;
+        this._sprite = new Sprite(Texture.WHITE);
+        this._sprite.anchor.set(0.5);
+        this._sprite.position.set(app.screen.width / 2, app.screen.height / 2);
+        this._sprite.width = this._sprite.height = this._spriteSize;
+        this._sprite.tint = 0xea985d;
+        this._lastMouseButton = 0;
+        this.shooting = new Shooting({app, player: this._sprite});
+        app.stage.addChild(this._sprite);
     }
 
     get position() {
-        return this.sprite.position;
+        return this._sprite.position;
     }
 
     get width() {
-        return this.sprite.width;
+        return this._sprite.width;
     }
 
-    update() {
-        const cursorPosition = this.app.renderer.plugins.interaction.mouse.global;
-        const angle = Math.atan2(
-            cursorPosition.y - this.sprite.position.y,
-            cursorPosition.x - this.sprite.position.x
+    public update(delta: number) {
+        const mouse = this._app.renderer.plugins.interaction.mouse;
+        const cursorPosition = mouse.global;
+        this._sprite.rotation = Math.atan2(
+            cursorPosition.y - this._sprite.position.y,
+            cursorPosition.x - this._sprite.position.x
         ) + Math.PI / 2;
 
-        this.sprite.rotation = angle;
+        if (mouse.buttons !== this._lastMouseButton) {
+            this.shooting.shoot = mouse.buttons !== 0;
+            this._lastMouseButton = mouse.buttons;
+        }
+
+        this.shooting.update(delta);
     }
 
 }
