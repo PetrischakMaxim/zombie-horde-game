@@ -11,7 +11,9 @@ export default class Zombie {
     _sprite: Graphics;
     _speed: number;
     _radius: number;
+    _isAttacking: boolean;
     _options: Options;
+    _timerId: number;
 
     constructor(options: Options) {
         this._options = options;
@@ -51,12 +53,19 @@ export default class Zombie {
         return spawnPoint;
     }
 
+    _attack() {
+        if (this._isAttacking) return;
+        this._isAttacking = true;
+        this._timerId = window.setInterval(() => {
+            this._options.player.attack();
+        }, 500)
+    }
+
     public update() {
         const e = new Victor(this._sprite.position.x, this._sprite.position.y);
         const s = new Victor(this._options.player.position.x, this._options.player.position.y);
         if (e.distance(s) < this._options.player.width / 2) {
-            const r = this._randomSpawnPoint();
-            this._sprite.position.set(r.x, r.y);
+            this._attack();
             return;
         }
         const d = s.subtract(e);
@@ -70,6 +79,7 @@ export default class Zombie {
 
     public kill() {
         this._options.app.stage.removeChild(this._sprite);
+        window.clearInterval(this._timerId);
     }
 
     get position() {
