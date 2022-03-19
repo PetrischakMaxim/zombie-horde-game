@@ -8,14 +8,14 @@ export default class Player {
     _app: Application;
     _healthBar: HealthBar;
     _health: number;
-    _isDead: boolean;
     _lastMouseButton: number;
 
+    public isDead: boolean;
     public shooting: Shooting;
 
     constructor(app: Application) {
         this._app = app;
-        this._isDead = false;
+        this.isDead = false;
         this._spriteSize = 32;
         this._sprite = new Sprite(Texture.WHITE);
         this._sprite.anchor.set(0.5);
@@ -34,7 +34,7 @@ export default class Player {
         this._health -= 1;
         this._healthBar.updateWidth(this._health);
         if (this._health <= 0) {
-            this._isDead = true;
+            this.isDead = true;
         }
     }
 
@@ -47,6 +47,9 @@ export default class Player {
     }
 
     public update(delta: number) {
+        if(this.isDead) {
+            return;
+        }
         const mouse = this._app.renderer.plugins.interaction.mouse;
         const cursorPosition = mouse.global;
         this._sprite.rotation = Math.atan2(
