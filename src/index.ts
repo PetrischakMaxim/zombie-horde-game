@@ -3,11 +3,13 @@ import {bulletHitTest} from "./components/utils";
 import Player from "./components/player";
 import Zombie from "./components/zombie";
 import Spawner from "./components/spawner";
+import {State} from "./components/state";
 
+const gameState = new State();
 const canvasSize = 512;
-const canvasElement = document.querySelector('#myCanvas');
+const canvasElement = document.querySelector('#myCanvas') as HTMLCanvasElement;
 
-const app = new Application({
+const app = new Application ({
     view: canvasElement as HTMLCanvasElement,
     width: canvasSize,
     height: canvasSize,
@@ -15,7 +17,6 @@ const app = new Application({
     resolution: 2
 });
 
-app.isGameStarted = false;
 settings.SCALE_MODE = SCALE_MODES.NEAREST;
 
 const startScene = createScene("Click to Start");
@@ -24,26 +25,30 @@ const endScene = createScene("Game Over");
 const player = new Player(app);
 const spawner = new Spawner({
     app: app,
+    state: gameState,
     callback: () => new Zombie({app, player})
 });
 
 app.ticker.add((delta) => runGame(delta));
 
 function runGame(delta: number) {
-    endScene.visible = player.isDead;
-    if(!app.isGameStarted) {
+
+    if(player.isDead) {
+        endGame();
         return;
     }
 
-    player.update(delta);
-    spawner.children.forEach((zombie: Zombie) => zombie.update());
+    if(gameState.isStarted) {
+        player.update(delta);
+        spawner.children.forEach((zombie: Zombie) => zombie.update(delta));
 
-    bulletHitTest(
-        player.shooting.bullets,
-        spawner.children,
-        8,
-        16,
-    );
+        bulletHitTest(
+            player.shooting.bullets,
+            spawner.children,
+            8,
+            16,
+        );
+    }
 }
 
 function createScene(sceneText: string) {
@@ -58,8 +63,14 @@ function createScene(sceneText: string) {
 }
 
 function startGame() {
-    app.isGameStarted = true;
+    gameState.isStarted = true;
     startScene.visible = false;
+}
+
+function endGame() {
+    gameState.isStarted = false;
+    gameState.isEnded = true;
+    endScene.visible = true;
 }
 
 document.addEventListener("click", startGame, {once: true});
