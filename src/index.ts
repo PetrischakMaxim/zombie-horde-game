@@ -4,6 +4,8 @@ import Player from "./components/player";
 import Zombie from "./components/zombie";
 import Spawner from "./components/spawner";
 import {State} from "./components/state";
+import loadAssets from "./utils/loadAssets";
+import createScene from "./utils/createScene";
 
 const gameState = new State();
 const canvasSize = 512;
@@ -19,49 +21,52 @@ const app = new Application ({
 
 settings.SCALE_MODE = SCALE_MODES.NEAREST;
 
-const startScene = createScene("Click to Start");
-const endScene = createScene("Game Over");
+const startScene = createScene(app,"Click to Start");
+const endScene = createScene(app, "Game Over");
+endScene.visible = false;
 
-const player = new Player(app);
-const spawner = new Spawner({
-    app: app,
-    state: gameState,
-    callback: () => new Zombie({app, player})
-});
+async function initGame() {
 
-app.ticker.add((delta) => runGame(delta));
+    try {
+        await loadAssets();
 
-function runGame(delta: number) {
+        // Todo Refactor
+        const player = new Player(app);
+        const spawner = new Spawner({
+            app: app,
+            state: gameState,
+            callback: () => new Zombie({app, player})
+        });
 
-    if(player.isDead) {
-        endGame();
-        return;
-    }
+        app.ticker.add((delta) => runGame(delta));
 
-    if(gameState.isStarted) {
-        player.update(delta);
-        spawner.children.forEach((zombie: Zombie) => zombie.update(delta));
+        const runGame = (delta: number) => {
 
-        bulletHitTest(
-            player.shooting.bullets,
-            spawner.children,
-            8,
-            16,
-        );
+            if(player.isDead) {
+                endGame();
+                return;
+            }
+
+            if(gameState.isStarted) {
+                player.update(delta);
+                spawner.children.forEach((zombie: Zombie) => zombie.update(delta));
+
+                bulletHitTest(
+                    player.shooting.bullets,
+                    spawner.children,
+                    8,
+                    16,
+                );
+            }
+        }
+
+        // End refactor
+    } catch (error) {
+        console.log(error.message);
     }
 }
 
-function createScene(sceneText: string) {
-    const sceneContainer = new Container();
-    const text = new Text(sceneText);
-    sceneContainer.x = app.screen.width  / 2;
-    sceneContainer.y = 0;
-    sceneContainer.zIndex = 1;
-    sceneContainer.addChild(text);
-    app.stage.addChild(sceneContainer);
-    return sceneContainer;
-}
-
+// Todo add scene class
 function startGame() {
     gameState.isStarted = true;
     startScene.visible = false;
@@ -73,5 +78,11 @@ function endGame() {
     endScene.visible = true;
 }
 
-document.addEventListener("click", startGame, {once: true});
+initGame()
+    .then(onDocumentClick);
+
+function onDocumentClick() {
+    document.addEventListener("click", startGame, {once: true});
+}
+
 
