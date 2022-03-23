@@ -1,4 +1,4 @@
-import {Application, Container, SCALE_MODES, Text, settings} from "pixi.js";
+import {Application, SCALE_MODES, settings} from "pixi.js";
 import {bulletHitTest} from "./components/utils";
 import Player from "./components/player";
 import Zombie from "./components/zombie";
@@ -9,7 +9,7 @@ import createScene from "./utils/createScene";
 
 const gameState = new State();
 const canvasSize = 512;
-const canvasElement = document.querySelector('#myCanvas') as HTMLCanvasElement;
+const canvasElement = document.querySelector('#root') as HTMLCanvasElement;
 
 const app = new Application ({
     view: canvasElement as HTMLCanvasElement,

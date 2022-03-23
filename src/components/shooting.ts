@@ -1,10 +1,11 @@
-import {Application, Sprite} from "pixi.js";
+import {Application} from "pixi.js";
 import Victor from "victor";
 import Bullet from "./bullet";
+import Player from "./player";
 
 interface Options {
     app: Application,
-    player: Sprite
+    player: Player
 }
 
 export default class Shooting {
@@ -31,6 +32,7 @@ export default class Shooting {
             this._options.player.position.x,
             this._options.player.position.y
         );
+        bullet.rotation = this._options.player.rotation;
 
         const angle = this._options.player.rotation - Math.PI / 2;
 
