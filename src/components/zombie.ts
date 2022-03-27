@@ -61,7 +61,7 @@ export default class Zombie {
         }, 500)
     }
 
-    public update() {
+    public update(delta: number) {
         const e = new Victor(this._sprite.position.x, this._sprite.position.y);
         const s = new Victor(this._options.player.position.x, this._options.player.position.y);
         if (e.distance(s) < this._options.player.width / 2) {
@@ -69,7 +69,7 @@ export default class Zombie {
             return;
         }
         const d = s.subtract(e);
-        const v = d.normalize().multiplyScalar(this._speed);
+        const v = d.normalize().multiplyScalar(this._speed * delta);
         this._sprite.scale.x = v.x < 0 ? 1 : -1;
         this._sprite.position.set(
             this._sprite.position.x + v.x,
