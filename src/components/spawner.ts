@@ -7,7 +7,7 @@ export default class Spawner {
     _maxCount: number;
     _callback: Function;
     _app: Application;
-    _state: State;
+    _state: string;
 
     public children: Array<Zombie>;
 
@@ -27,7 +27,7 @@ export default class Spawner {
 
     private _generate() {
         window.setInterval(() => {
-            if (this._state.isStarted) {
+            if (this._state.RUNNING) {
                 this._spawn()
             }
         }, this._time);

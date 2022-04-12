@@ -1,4 +1,4 @@
-import {Application, Loader, Texture, AnimatedSprite} from "pixi.js";
+import {AnimatedSprite, Application, Loader} from "pixi.js";
 import {assetsPath} from "../utils/constants";
 import Shooting from "./shooting";
 import HealthBar from "./healthBar";
@@ -32,12 +32,13 @@ export default class Player {
         this._sprite = new AnimatedSprite(spritesheet.animations["idle"]);
         this._sprite.animationSpeed = 0.1;
         this._sprite.play();
-        this._sprite.anchor.set(0.5);
+        this._sprite.anchor.set(0.5,0.3);
         this._sprite.position.set(app.screen.width / 2, app.screen.height / 2);
 
         this._lastMouseButton = 0;
         this._healthBar = new HealthBar(this._app);
         this._health = this._healthBar.maxLife;
+
         this.shooting = new Shooting({app, player: this});
         this._app.stage.sortableChildren = true;
         this._app.stage.addChild(this._sprite, this._healthBar);
@@ -65,6 +66,7 @@ export default class Player {
         }
         const mouse = this._app.renderer.plugins.interaction.mouse;
         const cursorPosition = mouse.global;
+
         this.rotation = Math.atan2(
             cursorPosition.y - this._sprite.position.y,
             cursorPosition.x - this._sprite.position.x
@@ -82,5 +84,4 @@ export default class Player {
 
         this.shooting.update(delta);
     }
-
 }

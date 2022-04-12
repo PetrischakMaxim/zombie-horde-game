@@ -23,11 +23,16 @@ export default class Shooting {
     }
 
     _fire() {
-        this._checkBullets();
+        if(this._bullets.length) {
+            this._checkBullets();
+        }
+
         this._renderBullet(new Bullet());
     }
 
     _renderBullet(bullet: Bullet) {
+        bullet.anchor.set(0.5);
+        bullet.scale.set(0.2);
         bullet.position.set(
             this._options.player.position.x,
             this._options.player.position.y
@@ -82,5 +87,4 @@ export default class Shooting {
     get bullets() {
         return this._bullets;
     }
-
 }
