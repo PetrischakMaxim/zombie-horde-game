@@ -1,15 +1,47 @@
 import {Application, Container, Text, TextStyle} from "pixi.js";
-import {textStyle, subTextStyle} from "./constants";
 
-export default function createScene(app: Application,sceneText: string, subSceneText: string) {
+export function createScene(app: Application, sceneText: string, subSceneText: string) {
     const sceneContainer = new Container();
+    const text = new Text(sceneText, new TextStyle({
+        fontFamily: "Arial",
+        fontSize: 36,
+        fontStyle: "normal",
+        fontWeight: "bold",
+        fill: ["#88A050", "#ff0000"], // gradient
+        stroke: "#F0E8C8",
+        strokeThickness: 2,
+        dropShadow: true,
+        dropShadowColor: "#000000",
+        dropShadowBlur: 4,
+        dropShadowAngle: Math.PI / 6,
+        dropShadowDistance: 6,
+        wordWrap: true,
+        wordWrapWidth: 440,
+        lineJoin: "round"
+    }));
 
-    const text = new Text(sceneText, new TextStyle(textStyle));
     text.x = app.screen.width / 2;
     text.y = 0;
     text.anchor.set(0.5, 0);
 
-    const subText = new Text(subSceneText, new TextStyle(subTextStyle));
+    const subText = new Text(subSceneText, new TextStyle({
+        fontFamily: "Arial",
+        fontSize: 22,
+        fontStyle: "normal",
+        fontWeight: "bold",
+        fill: ["#88A050"], // gradient
+        stroke: "#0",
+        strokeThickness: 2,
+        dropShadow: true,
+        dropShadowColor: "#000000",
+        dropShadowBlur: 4,
+        dropShadowAngle: Math.PI / 6,
+        dropShadowDistance: 6,
+        wordWrap: true,
+        wordWrapWidth: 440,
+        lineJoin: "round"
+    }));
+
     subText.x = app.screen.width / 2;
     subText.y = 50;
     subText.anchor.set(0.5, 0);
