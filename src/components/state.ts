@@ -1,7 +1,7 @@
-export const State =  {
-     PREINTRO : "preintro",
-     INTRO : "intro",
-     START : "start",
-     RUNNING : "running",
-     GAMEOVER : "gameover",
+export default class State {
+    static PREINTRO = "preintro";
+    static INTRO = "intro";
+    static START = "start";
+    static RUNNING = "running";
+    static GAMEOVER = "gameover";
 }
