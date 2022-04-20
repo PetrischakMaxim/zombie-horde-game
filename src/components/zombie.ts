@@ -24,7 +24,7 @@ export default class Zombie {
         this._options = options;
         const r = this._randomSpawnPoint();
         const zombieName = zombieNames[Math.floor(Math.random() * zombieNames.length)];
-        const {spritesheet} = Loader.shared.resources[`${assetsPath}img/${zombieName}.json`];
+        const {spritesheet} = Loader.shared.resources[`${assetsPath}/img/${zombieName}.json`];
 
         this._speed = zombieName === "quickzee" ? 1 : 0.25;
         this._textures = {
