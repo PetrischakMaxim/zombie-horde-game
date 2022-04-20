@@ -46,8 +46,8 @@ export default class Weather {
     }
 
     _createAudio() {
-        this._thunder = new Audio(`${assetsPath}sounds/thunder.mp3`);
-        this._rain = new Audio(`${assetsPath}sounds/rain.mp3`);
+        this._thunder = new Audio(`${assetsPath}/sounds/thunder.mp3`);
+        this._rain = new Audio(`${assetsPath}/sounds/rain.mp3`);
         this._rain.addEventListener("timeupdate", function () {
             if (this.currentTime > this.duration - 0.2) {
                 this.currentTime = 0;
