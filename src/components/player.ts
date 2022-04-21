@@ -1,8 +1,7 @@
-import {Application, Loader, Texture, AnimatedSprite} from "pixi.js";
+import {Application, Loader, AnimatedSprite} from "pixi.js";
 import {assetsPath} from "../utils/constants";
 import Shooting from "./shooting";
 import HealthBar from "./healthBar";
-
 
 export default class Player {
     _spriteSize: number;
@@ -24,7 +23,7 @@ export default class Player {
         this.isDead = false;
         this._app = app;
         this._spriteSize = 64;
-        const {spritesheet} = Loader.shared.resources[`${assetsPath}img/hero_male.json`];
+        const {spritesheet} = Loader.shared.resources[`${assetsPath}/img/hero_male.json`];
         this._textures = {
             idle: new AnimatedSprite(spritesheet.animations["idle"]),
             shoot: new AnimatedSprite(spritesheet.animations["shoot"]),
@@ -38,9 +37,9 @@ export default class Player {
         this._lastMouseButton = 0;
         this._healthBar = new HealthBar(this._app);
         this._health = this._healthBar.maxLife;
-        this.shooting = new Shooting({app, player: this});
         this._app.stage.sortableChildren = true;
         this._app.stage.addChild(this._sprite, this._healthBar);
+        this.shooting = new Shooting({app, player: this});
     }
 
     public attack() {
@@ -49,14 +48,6 @@ export default class Player {
         if (this._health <= 0) {
             this.isDead = true;
         }
-    }
-
-    get position() {
-        return this._sprite.position;
-    }
-
-    get width() {
-        return this._sprite.width;
     }
 
     public update(delta: number) {
@@ -83,4 +74,15 @@ export default class Player {
         this.shooting.update(delta);
     }
 
+    get position() {
+        return this._sprite.position;
+    }
+
+    get width() {
+        return this._sprite.width;
+    }
+
+    set scale(scale: number) {
+        this._sprite.scale.set(scale);
+    }
 }
