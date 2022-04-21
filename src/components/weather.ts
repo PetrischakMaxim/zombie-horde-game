@@ -32,7 +32,7 @@ export default class Weather {
         let elapsed = Date.now();
         const update = function () {
             requestAnimationFrame(update);
-            let now = Date.now();
+            const now = Date.now();
             emitter.update((now - elapsed) * 0.001);
             elapsed = now;
         };
@@ -40,12 +40,7 @@ export default class Weather {
         update();
     }
 
-    public enableSound() {
-        this._isSound = true;
-        this._rain.play();
-    }
-
-    _createAudio() {
+    private _createAudio() {
         this._thunder = new Audio(`${assetsPath}/sounds/thunder.mp3`);
         this._rain = new Audio(`${assetsPath}/sounds/rain.mp3`);
         this._rain.addEventListener("timeupdate", function () {
@@ -55,7 +50,7 @@ export default class Weather {
         });
     }
 
-    async _flash() {
+    private async _flash() {
         await new Promise((response) =>
             setTimeout(
                 response,
@@ -70,5 +65,10 @@ export default class Weather {
         await new Promise((res) => setTimeout(res, 200));
         this._app.stage.removeChild(this._lightning);
         this._flash();
+    }
+
+    public enableSound() {
+        this._isSound = true;
+        this._rain.play();
     }
 }

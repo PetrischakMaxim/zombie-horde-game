@@ -27,12 +27,12 @@ export default class Shooting {
         this._sound = new Audio(`${assetsPath}/sounds/shoot.mp3`);
     }
 
-    _playSound() {
+    private _playSound() {
         this._sound.currentTime = 0;
         this._sound.play();
     }
 
-    _fire() {
+    private _fire() {
         this._playSound();
         const {stage} = this._options.app;
 
@@ -53,20 +53,11 @@ export default class Shooting {
         stage.addChild(bullet);
     }
 
-    _setupBullet({player} = this._options) {
+    private _setupBullet({player} = this._options) {
         const bullet = new Bullet(player);
         const angle = player.rotation - Math.PI / 2;
         bullet.velocity = new Victor(Math.cos(angle), Math.sin(angle)).multiplyScalar(this._speed);
         return bullet;
-    }
-
-    set shoot(shooting: boolean) {
-        if (shooting) {
-            this._fire();
-            this._timerId = window.setInterval( () => this._fire(), 500);
-        } else {
-            window.clearInterval(this._timerId);
-        }
     }
 
     public update(delta: number) {
@@ -80,5 +71,14 @@ export default class Shooting {
 
     get bullets() {
         return this._bullets;
+    }
+
+    set shoot(shooting: boolean) {
+        if (shooting) {
+            this._fire();
+            this._timerId = window.setInterval( () => this._fire(), 500);
+        } else {
+            window.clearInterval(this._timerId);
+        }
     }
 }

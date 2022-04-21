@@ -19,15 +19,7 @@ export default class HealthBar extends Graphics {
         this._init();
     }
 
-    public updateWidth(playerHealth: number) {
-        this.width = (playerHealth / this._maxLife) * this._initialWidth;
-    }
-
-    get maxLife() {
-        return this._maxLife;
-    }
-
-    _init() {
+    private _init() {
         this.beginFill(this._color, 1);
         this.drawRect(
             this._margin,
@@ -37,5 +29,13 @@ export default class HealthBar extends Graphics {
         )
         this.endFill();
         this.zIndex = 1;
+    }
+
+    public updateWidth(playerHealth: number) {
+        this.width = (playerHealth / this._maxLife) * this._initialWidth;
+    }
+
+    get maxLife() {
+        return this._maxLife;
     }
 }

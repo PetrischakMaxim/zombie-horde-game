@@ -40,7 +40,7 @@ export default class Zombie {
         this._options.app.stage.addChild(this._sprite);
     }
 
-    _randomSpawnPoint() {
+    private _randomSpawnPoint() {
         const edge = Math.floor(Math.random() * 4);
         const spawnPoint = new Victor(0, 0);
         const canvasSize = this._options.app.screen.width;
@@ -65,7 +65,7 @@ export default class Zombie {
         return spawnPoint;
     }
 
-    _attack() {
+    private _attack() {
         if (this._isAttacking) return;
         this._isAttacking = true;
         this._timerId = window.setInterval(() => {

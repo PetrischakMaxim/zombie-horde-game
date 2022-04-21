@@ -50,18 +50,6 @@ export default class Player {
         }
     }
 
-    get position() {
-        return this._sprite.position;
-    }
-
-    get width() {
-        return this._sprite.width;
-    }
-
-    set scale(scale: number) {
-        this._sprite.scale.set(scale);
-    }
-
     public update(delta: number) {
         if (this.isDead) {
             return;
@@ -84,5 +72,17 @@ export default class Player {
         }
 
         this.shooting.update(delta);
+    }
+
+    get position() {
+        return this._sprite.position;
+    }
+
+    get width() {
+        return this._sprite.width;
+    }
+
+    set scale(scale: number) {
+        this._sprite.scale.set(scale);
     }
 }

@@ -15,7 +15,7 @@ export default class Spawner {
         callback: Function,
     }) {
         this._time = 2500;
-        this._maxCount = 10;
+        this._maxCount = 20;
         this._app = options.app;
         this._callback = options.callback;
         this.children = [];
