@@ -3,8 +3,8 @@ import {Application, Container, Text, TextStyle} from "pixi.js";
 export function createScene(app: Application, sceneText: string, subSceneText: string) {
     const sceneContainer = new Container();
     const text = new Text(sceneText, new TextStyle({
-        fontFamily: "Arial",
         fontSize: 36,
+        fontFamily: "Arial",
         fontStyle: "normal",
         fontWeight: "bold",
         fill: ["#88A050", "#ff0000"], // gradient
@@ -25,8 +25,8 @@ export function createScene(app: Application, sceneText: string, subSceneText: s
     text.anchor.set(0.5, 0);
 
     const subText = new Text(subSceneText, new TextStyle({
-        fontFamily: "Arial",
         fontSize: 22,
+        fontFamily: "Arial",
         fontStyle: "normal",
         fontWeight: "bold",
         fill: ["#88A050"], // gradient

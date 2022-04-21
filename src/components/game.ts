@@ -5,6 +5,7 @@ import Weather from "./weather";
 import Player from "./player";
 import Spawner from "./spawner";
 import Zombie from "./zombie";
+import Counter from "./counter";
 import {assetsPath, sceneText} from "../utils/constants";
 import {loadAssets} from "../utils/loadAssets";
 import {createScene} from "../utils/createScene";
@@ -14,11 +15,13 @@ import {initSound} from "../utils/initSound";
 export default class Game extends Application {
     public state: State;
     public weather: Weather;
+    public counter: Counter;
 
     constructor(props: IApplicationOptions ) {
         super(props);
         this.state = null;
         this.weather = null;
+        this.counter = null;
     }
 
     public async init() {
@@ -26,6 +29,7 @@ export default class Game extends Application {
         try {
             await loadAssets();
             this.weather = new Weather(this);
+            this.counter = new Counter(this);
             const player = new Player(this);
             const spawner = new Spawner({
                 app: this,
@@ -52,7 +56,7 @@ export default class Game extends Application {
                     case State.RUNNING:
                         player.update(delta);
                         spawner.children.forEach((zombie) => zombie.update(delta));
-                        bulletHitTest(player.shooting.bullets, spawner.children, 8,16);
+                        bulletHitTest(player.shooting.bullets, spawner.children, 8,16, this.counter);
                         break;
                     default:
                         break;

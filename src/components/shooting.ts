@@ -22,7 +22,7 @@ export default class Shooting {
         this._options = options;
         this._speed = 4;
         this._bullets = [];
-        this._maxBullets = 3;
+        this._maxBullets = 1;
         this._bulletRadius = 8;
         this._sound = new Audio(`${assetsPath}/sounds/shoot.mp3`);
     }
