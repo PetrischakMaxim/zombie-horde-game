@@ -29,7 +29,7 @@ Click on the poster and to see a demo
 
 ## How to play
 - Online:
-    - Go to [this link](https://petrischakmaxim.github.io/space-shooter/)
+    - Go to [this link](https://pixiresidentevil.netlify.app/)
 - Locally:
     - Clone this repository
     - Install dependencies `npm i`
