@@ -1,38 +1,52 @@
-## PixiResidentEvil
-The game created using `HTML5` `PixiJS` `TypeScript`.
+# Zombie Horde Game
+
+A browser-based action game built with PixiJS and TypeScript, featuring a fast-paced zombie survival scenario with particle effects, animated sprites, and interactive shooting controls.
+
+## Features
+- PixiJS rendering with animated sprite sheets for enemies and player characters
+- Player shooting using mouse input with responsive aiming
+- Zombie wave gameplay with score tracking and health management
+- Particle and weather effects powered by `pixi-particles`
+- Live development workflow via Webpack and TypeScript
+
+## Tech Stack
+- `PixiJS` for 2D rendering
+- `TypeScript` for typed game logic
+- `Webpack` for bundling and development server
+- `matter-js` for physics utility support
+- `pixi-particles` for particle effects
+- `Victor` for vector math
 
 ## Demo
-Click on the poster and to see a demo
-[![Space Shooter Demo - Youtube](./posters/poster-1.jpg)](https://youtube.com/shorts/BTKPSErxSFs)
+Click the poster to view the demo:
+[![Zombie Horde Demo](./posters/poster-1.jpg)](https://youtube.com/shorts/BTKPSErxSFs)
 
 ## Screenshots
-| ![Poster 1](./posters/poster-2.jpg) | ![Poster 2](./posters/poster-3.jpg) |
+| ![Poster 2](./posters/poster-2.jpg) | ![Poster 3](./posters/poster-3.jpg) |
 |-------------------------------------|-------------------------------------|
 
-## Game Features
-
-- Health bar for the player
-- Fast zombies
-- Score to check your achievements
-- Theme music and custom sounds
-- Sprite animation
-    - zombie walking
-    - player animation
-    - weather raining
-- Fun to play :)
-
 ## Controls
-|              | Mouse  only            |
-|--------------|------------------------|
-| Fire         | <kbd>Left button</kbd> |
+| Action | Input |
+|--------|-------|
+| Fire   | Left mouse button |
 
+## Installation
+1. Clone the repository
+2. Install dependencies:
+```bash
+npm install
+```
+3. Start the development server:
+```bash
+npm run serve
+```
+4. Open the browser when the local dev server launches
 
-## How to play
-- Online:
-    - Go to [this link](https://pixiresidentevil.netlify.app/)
-- Locally:
-    - Clone this repository
-    - Install dependencies `npm i`
-    - Start webpack watcher `npm run watch`
-    - Start local web server
+## Project Purpose
+This project is a frontend game prototype built to demonstrate modern browser game development with PixiJS, TypeScript, asset management, and a Webpack-based workflow.
+
+## Notes
+- Designed as an experimental game demo rather than a production release.
+- Good candidate for expanding with additional enemy behavior, level progression, and sound design.
+
   
